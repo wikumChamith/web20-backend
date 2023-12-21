@@ -21,7 +21,7 @@ public class FirebaseUserRepository implements UserRepository {
 
     @Override
     public boolean create(User user) {
-        return firestore.collection(Constants.USER_COLLECTION).add(user).isDone();
+        return firestore.collection(Constants.USER_COLLECTION).document(user.getId()).set(user).isDone();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class FirebaseUserRepository implements UserRepository {
 
     @Override
     public User update(User user) {
-        firestore.collection(Constants.USER_COLLECTION).document(user.getUid()).set(user, SetOptions.merge());
+        firestore.collection(Constants.USER_COLLECTION).document(user.getId()).set(user, SetOptions.merge());
         return user;
     }
 
