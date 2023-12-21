@@ -35,3 +35,9 @@ out/
 
 ### VS Code ###
 .vscode/
+/.firebaserc
+/firebase.json
+/firebase-debug.log
+/firestore-debug.log
+/ui-debug.log
+/src/main/resources/web-group-20-firebase-adminsdk-vkc1b-5890d94957.json

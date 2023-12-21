@@ -5,21 +5,24 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
+import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
+import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
-@Configuration
+@Service
 public class FirebaseConfiguration {
 
-    @Bean
+    @PostConstruct
     public FirebaseApp firebaseApp() throws IOException {
-        Resource firebaseConfigFile = new ClassPathResource("web-group-20-firebase-adminsdk-vkc1b-5890d94957.json");
-        return FirebaseApp.initializeApp(
-                new FirebaseOptions.Builder()
-                        .setCredentials(GoogleCredentials.fromStream(firebaseConfigFile.getInputStream()))
-                        .build()
-        );
+        File file = ResourceUtils.getFile("classpath:web-group-20-firebase-adminsdk-vkc1b-5890d94957.json");
+        FirebaseOptions options = new FirebaseOptions.Builder()
+                .setCredentials(GoogleCredentials.fromStream(new FileInputStream(file)))
+                .setServiceAccountId("firebase-adminsdk-vkc1b@web-group-20.iam.gserviceaccount.com")
+                .build();
+        return FirebaseApp.initializeApp(options);
     }
 }
